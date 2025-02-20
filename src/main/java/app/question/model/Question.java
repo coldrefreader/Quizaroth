@@ -1,6 +1,7 @@
 package app.question.model;
 
 
+import app.answer.model.Answer;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,9 +25,13 @@ public class Question {
 
     @ElementCollection
     @CollectionTable(name = "question_choices", joinColumns = @JoinColumn(name = "question_id"))
+    @OrderColumn(name = "choice_index")
     @Column(nullable = false)
     private List<String> choices;
 
     @Column(nullable = false)
     private int correctAnswerIndex; // 0, 1, 2
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Answer> answers;
 }

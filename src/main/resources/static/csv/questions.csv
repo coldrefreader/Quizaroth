@@ -1,3 +1,4 @@
+id,question,choice1,choice2,choice3,correctAnswerIndex
 1,"What is the first city Arthas visits in the campaign?","Hearthglen","Strahnbrad","Solliden",1
 2,"What is the name of Kael'thas's weapon?","Quel'delar","Felomin ashal","Felo'melorn",2
 3,"Which Dreadlord took control of Garithos's forces?","Balnazzar","Varimathras","Detheroc",2
@@ -26,7 +27,7 @@
 26,"Which Dwarven clan was victorious in the War of the Three Hammers?","Bronzebeard","Wildhammer","Dark Iron",0
 27,"How many Sha were buried in Pandaria?","Six","Seven","Eight",1
 28,"Who first betrayed the Orcs of Draenor in favour of the Legion?","Kilrogg","Gul'dan","Ner'zhul",1
-29,"During her pursuit of Illidan, who was Maiev's second in command?","Shandris","Raene",Naisha",2
+29,"During her pursuit of Illidan, who was Maiev's second in command?","Shandris","Raene","Naisha",2
 30,"Which Sha was the most powerful?","Pride","Anger","Violence",0
 31,"What are the High Elves and Blood Elves who succumbed to magical withdrawal called?","Wretched","Withered","Darkfallen",0
 32,"Where did the second destruction of Dalaran take place?","Hillsbrad Foothills","Crystalsong Forest","Khaz Algar",2
@@ -62,4 +63,6 @@
 62,"Near which world did the Pantheon of Order confront Sargeras?","Xerrath","Nihilam","Shar'gel",1
 63,"How many known continents does Azeroth have?","Five","Three","Four",2
 64,"What is the Mantid's seat of power called during Mists of Pandaria?","Klaxxi'vess","Heart of Fear","Terrace of Gurthan",1
+65,"Which Kul Tiran noble house did not partake in the Invasion of Durotar?","Proudmoore","Waycrest","Ashvane",1
+66,"Following Zul's betrayal, which race was represented for the first time on the Zanchuli Council?","Forest Troll","Vulpera","Tortollan",2
 
