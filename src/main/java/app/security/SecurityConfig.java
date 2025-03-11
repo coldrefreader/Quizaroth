@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,10 +23,16 @@ public class SecurityConfig {
     //Any other request requires authentication, redirects to /login if requirements are not met
     //Logout redirects to the index (starting) page, not the home ('main menu' of multiplayer) page, while clearing session and cookies
 
-        http
-                .csrf(csrf -> csrf.disable())
+        http //Top one will be for when everything is done, bottom uncommented one is to give public access for testing
+//                .csrf(csrf -> csrf.disable())
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/auth/register", "/auth/login", "/auth/me").permitAll()
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+//                        .anyRequest().authenticated()
+//                )
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register", "/auth/login", "/auth/me").permitAll()
+                        .requestMatchers("/auth/register", "/auth/login", "/auth/me", "/questions", "/answers", "/answers/submit", "/game-sessions", "/game-sessions/{sessionId}").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
