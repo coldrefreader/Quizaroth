@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface GameSessionRepository extends JpaRepository<GameSession, UUID> {
 
     List<GameSession> findByPlayer1IdOrPlayer2Id(UUID player1Id, UUID player2Id);
+
 }
