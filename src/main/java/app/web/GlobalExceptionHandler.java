@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
 
     //Handles validation errors, like in RegisterRequest
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Map<String, Object>> handleValidationErrors(MethodArgumentNotValidException ex) {
 
         Map<String, String> errors = new HashMap<>();
 
@@ -24,7 +24,10 @@ public class GlobalExceptionHandler {
             errors.put(error.getField(), error.getDefaultMessage());
         }
 
-        return ResponseEntity.badRequest().body(errors);
+        Map<String, Object> response = new HashMap<>();
+        response.put("errors", errors);
+
+        return ResponseEntity.badRequest().body(response);
     }
 
     //Handles domain-specific exceptions, like a user already existing

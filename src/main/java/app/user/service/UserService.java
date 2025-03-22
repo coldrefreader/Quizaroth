@@ -39,7 +39,7 @@ public class UserService implements UserDetailsService {
 
     @CacheEvict(value = "users", allEntries = true)
     @Transactional
-    public boolean register(@Valid RegisterRequest registerRequest) {
+    public void register(@Valid RegisterRequest registerRequest) {
 
         Optional<User> optionalUser = userRepository.findByUsername(registerRequest.getUsername());
 
@@ -53,8 +53,6 @@ public class UserService implements UserDetailsService {
         User user = userRepository.save(initialiseUser(registerRequest));
 
         log.info("Successfully created new user with username [%s] and id [%s]".formatted(user.getUsername(), user.getId()));
-
-        return true;
     }
 
     @CacheEvict(value = "users", allEntries = true)

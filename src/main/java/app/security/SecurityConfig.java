@@ -4,9 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,38 +18,32 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-    //Permit everyone to register and login, session is created only when needed
-    //Anything with admin requires the ADMIN role
-    //Any other request requires authentication, redirects to /login if requirements are not met
-    //Logout redirects to the index (starting) page, not the home ('main menu' of multiplayer) page, while clearing session and cookies
+        //Permit everyone to register and login, session is created only when needed
+        //Anything with admin requires the ADMIN role
+        //Any other request requires authentication, redirects to /login if requirements are not met
+        //Logout redirects to the index (starting) page, not the home ('main menu' of multiplayer) page, while clearing session and cookies
 
-        http //Top one will be for when everything is done, bottom uncommented one is to give public access for testing
-//                .csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/auth/register", "/auth/login", "/auth/me").permitAll()
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
-//                        .anyRequest().authenticated()
-//                )
-                .csrf(AbstractHttpConfigurer::disable)
+        http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register", "/auth/login", "/v1/auth/**", "/v1/match-history/**", "/v1/leaderboard/**",
-                                "/questions", "/v1/answers/**", "/v1/game-sessions/**", "/game-sessions/{sessionId}").permitAll()
+                        .requestMatchers("/v1/auth/register", "/v1/auth/login", "/v1/questions", "/v1/auth/me").permitAll()
+//                        .requestMatchers("/v1/auth/me").authenticated()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/auth/logout")
+                        .logoutUrl("/v1/auth/logout")
                         .logoutSuccessHandler((request, response, authentication) -> {
                             response.setStatus(200);
                             response.getWriter().write("{\"message\":\"Logged out successfully\"}");
                             response.getWriter().flush();
                         })
                         .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
+                        .deleteCookies("JSESSIONID", "SESSION")
                 )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                );
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                ).cors(Customizer.withDefaults());
 
         return http.build();
     }
