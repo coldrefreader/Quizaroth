@@ -5,10 +5,7 @@ import app.question.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class QuestionService {
@@ -28,8 +25,8 @@ public class QuestionService {
             return questions;
         }
 
+        Collections.shuffle(questions);
         return questions.stream()
-                .sorted((q1, q2) -> rand.nextInt(2) - 1)
                 .limit(10)
                 .toList();
     }

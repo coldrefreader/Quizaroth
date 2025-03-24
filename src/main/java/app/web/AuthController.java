@@ -1,15 +1,16 @@
 package app.web;
 
 import app.security.AuthenticationMetadata;
+import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.LoginRequest;
 import app.web.dto.RegisterRequest;
+import app.web.dto.UserEditRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +22,10 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.web.bind.annotation.*;
 
 
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -79,16 +83,33 @@ public class AuthController {
 
         log.info("Checking authentication for /me");
 
-        if (userDetails == null) {
-            log.warn("No authentication found");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "User not authenticated"));
-        }
+//        if (userDetails == null) {
+//            log.warn("No authentication found");
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "User not authenticated"));
+//        }
+
+        User updatedUser = userService.getById(userDetails.getUserId());
 
         log.info("Authenticated user: {}", userDetails.getUsername());
 
-        return ResponseEntity.ok(Map.of(
-                "userId", userDetails.getUserId(),
-                "username", userDetails.getUsername(),
-                "role", userDetails.getRole().name()));
+        Map<String, Object> response = new HashMap<>();
+        response.put("userId", updatedUser.getId());
+        response.put("username", updatedUser.getUsername());
+        response.put("email", updatedUser.getEmail());
+        response.put("firstName", updatedUser.getFirstName());
+        response.put("lastName", updatedUser.getLastName());
+        response.put("role", updatedUser.getRole());
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<?> editUserProfile(@RequestBody UserEditRequest userEditRequest, Principal principal) {
+
+        UUID userId = userService.getUserIdByUsername(principal.getName());
+        log.info("Editing profile for user: {}", userId);
+
+        userService.editUserInformation(userId, userEditRequest);
+        return ResponseEntity.ok(Map.of("message", "Profile successfully updated"));
     }
 }

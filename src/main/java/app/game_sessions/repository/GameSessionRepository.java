@@ -10,6 +10,5 @@ import java.util.UUID;
 @Repository
 public interface GameSessionRepository extends JpaRepository<GameSession, UUID> {
 
-    List<GameSession> findByPlayer1IdOrPlayer2Id(UUID player1Id, UUID player2Id);
-
+    List<GameSession> findTop10ByPlayer1IdOrPlayer2IdOrderByTimestampDesc(UUID player1Id, UUID player2Id);
 }

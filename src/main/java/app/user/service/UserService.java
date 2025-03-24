@@ -60,14 +60,14 @@ public class UserService implements UserDetailsService {
 
         User user = getById(userId);
 
+        user.setEmail(userEditRequest.getEmail());
         user.setFirstName(userEditRequest.getFirstName());
         user.setLastName(userEditRequest.getLastName());
-        user.setEmail(userEditRequest.getEmail());
 
         userRepository.save(user);
     }
 
-    private User getById(UUID userId) {
+    public User getById(UUID userId) {
 
         return userRepository.findById(userId).orElseThrow(() -> new DomainException("User with id [%s] not found".formatted(userId)));
     }
@@ -125,5 +125,13 @@ public class UserService implements UserDetailsService {
         }
 
         return new AuthenticationMetadata(user.getId(), username, user.getPassword(), user.getRole(), user.isActive());
+    }
+
+    public UUID getUserIdByUsername(String username) {
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with this info not found"));
+
+        return user.getId();
     }
 }

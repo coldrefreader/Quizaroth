@@ -21,7 +21,7 @@ public class MatchHistoryService {
 
     public List<MatchHistoryRequest> getMatchHistory(UUID userId) {
 
-        List<GameSession> gameSessions = gameSessionRepository.findByPlayer1IdOrPlayer2Id(userId, userId);
+        List<GameSession> gameSessions = gameSessionRepository.findTop10ByPlayer1IdOrPlayer2IdOrderByTimestampDesc(userId, userId);
 
         return gameSessions.stream().map(gameSession -> {
 
@@ -32,10 +32,10 @@ public class MatchHistoryService {
             boolean isPlayer1 = gameSession.getPlayer1().getId().equals(userId);
             perspectiveResult = isPlayer1 ? gameSession.getResult().name() :
                     switch (gameSession.getResult()) {
-                    case VICTORY -> "DEFEAT";
-                    case DEFEAT -> "VICTORY";
-                    default -> "DRAW";
-                };
+                        case VICTORY -> "DEFEAT";
+                        case DEFEAT -> "VICTORY";
+                        default -> "DRAW";
+                    };
 
 
             String opponentUsername = isPlayer1 ? gameSession.getPlayer2().getUsername() : gameSession.getPlayer1().getUsername();
