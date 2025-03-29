@@ -2,7 +2,7 @@ package app.web;
 
 import app.game_sessions.model.GameSession;
 import app.game_sessions.service.GameSessionService;
-import app.web.dto.AnswerResponse;
+import app.web.dto.FinaliseGameStateResponse;
 import app.web.dto.GameSessionResponse;
 import app.web.dto.GameSessionRequest;
 import jakarta.validation.Valid;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -42,15 +41,7 @@ public class GameSessionController {
 
         GameSession gameSession = gameSessionService.getGameSessionById(sessionId);
 
-        List<AnswerResponse> answerRequest = gameSession.getAnswers()
-                .stream()
-                .map(answer -> new AnswerResponse(
-                        answer.getId(),
-                        answer.getQuestion().getText(),
-                        answer.getPlayer().getUsername(),
-                        answer.getSelectedAnswerIndex(),
-                        answer.isCorrect()
-                )).distinct().toList();
+
 
         GameSessionResponse request = new GameSessionResponse(
                 gameSession.getId(),
@@ -58,10 +49,18 @@ public class GameSessionController {
                 gameSession.getPlayer2().getUsername(),
                 gameSession.getPlayer1Score(),
                 gameSession.getPlayer2Score(),
-                gameSession.getResult().name(),
-                answerRequest
+                gameSession.getResult().name()
+
         );
 
         return ResponseEntity.ok(request);
+    }
+
+    @PostMapping("/finalise/{sessionId}")
+    public ResponseEntity<?> finaliseGameSession(@PathVariable UUID sessionId,
+                                                 @Valid @RequestBody FinaliseGameStateResponse response) {
+
+        gameSessionService.finaliseGame(sessionId, response);
+        return ResponseEntity.ok(Map.of("gameSessionId", sessionId));
     }
 }

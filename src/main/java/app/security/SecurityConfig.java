@@ -24,16 +24,10 @@ public class SecurityConfig {
         //Logout redirects to the index (starting) page, not the home ('main menu' of multiplayer) page, while clearing session and cookies
 
         http
-//                .csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/v1/auth/register", "/v1/auth/login", "/v1/questions").permitAll()
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
-//                        .anyRequest().authenticated()
-//                )
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/v1/auth/register", "/v1/auth/login", "/v1/questions","/v1/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/v1/auth/register", "/v1/auth/login", "/v1/questions").permitAll()
+                        .requestMatchers("/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout

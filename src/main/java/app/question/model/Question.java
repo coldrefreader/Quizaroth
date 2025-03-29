@@ -1,7 +1,5 @@
 package app.question.model;
 
-
-import app.answer.model.Answer;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,7 +29,4 @@ public class Question {
 
     @Column(nullable = false)
     private int correctAnswerIndex; // 0, 1, 2
-
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Answer> answers;
 }

@@ -1,6 +1,5 @@
 package app.game_sessions.service;
 
-import app.answer.repository.AnswerRepository;
 import app.exception.DomainException;
 import app.game_sessions.model.GameResult;
 import app.game_sessions.model.GameSession;
@@ -8,12 +7,14 @@ import app.game_sessions.repository.GameSessionRepository;
 import app.leaderboard.service.LeaderboardService;
 import app.user.model.User;
 import app.user.repository.UserRepository;
+import app.web.dto.FinaliseGameStateResponse;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
@@ -22,14 +23,12 @@ public class GameSessionService {
 
     private final GameSessionRepository gameSessionRepository;
     private final UserRepository userRepository;
-    private final AnswerRepository answerRepository;
     private final LeaderboardService leaderboardService;
 
     @Autowired
-    public GameSessionService(GameSessionRepository gameSessionRepository, UserRepository userRepository, AnswerRepository answerRepository, LeaderboardService leaderboardService) {
+    public GameSessionService(GameSessionRepository gameSessionRepository, UserRepository userRepository, LeaderboardService leaderboardService) {
         this.gameSessionRepository = gameSessionRepository;
         this.userRepository = userRepository;
-        this.answerRepository = answerRepository;
         this.leaderboardService = leaderboardService;
     }
 
@@ -55,35 +54,42 @@ public class GameSessionService {
     }
 
 
+//    @Transactional
+//    public void trackAndCompleteGame(UUID gameSessionId) {
+//
+//        GameSession gameSession = gameSessionRepository.findById(gameSessionId)
+//                .orElseThrow(() -> new DomainException("Game session with id " + gameSessionId + " not found"));
+//
+//        int player1Answers = answerRepository.countByGameSessionAndPlayer(gameSession, gameSession.getPlayer1());
+//        int player2Answers = answerRepository.countByGameSessionAndPlayer(gameSession, gameSession.getPlayer2());
+//
+//        if (player1Answers == 10 && player2Answers == 10) {
+//            finaliseGame(gameSession);
+//        }
+//    }
+
+
     @Transactional
-    public void trackAndCompleteGame(UUID gameSessionId) {
+    public void finaliseGame(UUID sessionId, FinaliseGameStateResponse finalState) {
 
-        GameSession gameSession = gameSessionRepository.findById(gameSessionId)
-                .orElseThrow(() -> new DomainException("Game session with id " + gameSessionId + " not found"));
-
-        int player1Answers = answerRepository.countByGameSessionAndPlayer(gameSession, gameSession.getPlayer1());
-        int player2Answers = answerRepository.countByGameSessionAndPlayer(gameSession, gameSession.getPlayer2());
-
-        if (player1Answers == 10 && player2Answers == 10) {
-            finaliseGame(gameSession);
-        }
-    }
-
-
-    @Transactional
-    public void finaliseGame(GameSession gameSession) {
+        GameSession gameSession = gameSessionRepository.findById(sessionId)
+                .orElseThrow(() -> new DomainException("Game session with id " + sessionId + " not found"));
 
         if (gameSession.getResult() != GameResult.UNDETERMINED) {
             log.warn("Game session {} already finalised with result: {}", gameSession.getId(), gameSession.getResult());
             return;
         }
 
-        int player1Score = gameSession.getPlayer1Score();
-        int player2Score = gameSession.getPlayer2Score();
-        String player1Username = gameSession.getPlayer1().getUsername();
-        String player2Username = gameSession.getPlayer2().getUsername();
+        Map<String, Integer> finalScores = finalState.getPlayerScores();
 
-        calculateScoreAndUpdateLeaderboard(gameSession, player1Score, player2Score, player1Username, player2Username);
+        int finalPlayer1Score = finalScores.getOrDefault(gameSession.getPlayer1().getUsername(), gameSession.getPlayer1Score());
+        int finalPlayer2Score = finalScores.getOrDefault(gameSession.getPlayer2().getUsername(), gameSession.getPlayer2Score());
+
+        gameSession.setPlayer1Score(finalPlayer1Score);
+        gameSession.setPlayer2Score(finalPlayer2Score);
+
+        calculateScoreAndUpdateLeaderboard(gameSession, finalPlayer1Score, finalPlayer2Score,
+                gameSession.getPlayer1().getUsername(), gameSession.getPlayer2().getUsername());
 
         gameSessionRepository.save(gameSession);
         log.info("Game session has been finalised : {}", gameSession.getResult());

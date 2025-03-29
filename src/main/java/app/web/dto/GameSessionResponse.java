@@ -22,5 +22,4 @@ public class GameSessionResponse {
     private int player1Score;
     private int player2Score;
     private String result;
-    private List<AnswerResponse> answers;
 }

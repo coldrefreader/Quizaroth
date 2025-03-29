@@ -1,12 +1,10 @@
 package app.game_sessions.model;
 
-import app.answer.model.Answer;
 import app.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -38,9 +36,6 @@ public class GameSession {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private GameResult result;
-
-    @OneToMany(mappedBy = "gameSession", cascade = CascadeType.ALL)
-    private List<Answer> answers;
 
     @Column(nullable = false)
     private LocalDateTime timestamp;
