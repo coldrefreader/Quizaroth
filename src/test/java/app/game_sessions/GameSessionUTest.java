@@ -1,6 +1,5 @@
 package app.game_sessions;
 
-import app.answer.repository.AnswerRepository;
 import app.exception.DomainException;
 import app.game_sessions.model.GameResult;
 import app.game_sessions.model.GameSession;
@@ -31,33 +30,11 @@ public class GameSessionUTest {
     @Mock
     private UserRepository userRepository;
     @Mock
-    private AnswerRepository answerRepository;
-    @Mock
     private LeaderboardService leaderboardService;
 
     @InjectMocks
     private GameSessionService gameSessionService;
 
-    //@Transactional
-    //    public GameSession createGameSession(UUID player1Id, UUID player2Id) {
-    //
-    //        User player1 = userRepository.findById(player1Id)
-    //                .orElseThrow(() -> new DomainException("User with id " + player1Id + " not found"));
-    //
-    //        User player2 = userRepository.findById(player2Id)
-    //                .orElseThrow(() -> new DomainException("User with id " + player2Id + " not found"));
-    //
-    //        GameSession gameSession = GameSession.builder()
-    //                .player1(player1)
-    //                .player2(player2)
-    //                .player1Score(0)
-    //                .player2Score(0)
-    //                .result(GameResult.UNDETERMINED)
-    //                .timestamp(LocalDateTime.now())
-    //                .build();
-    //
-    //        return gameSessionRepository.save(gameSession);
-    //    }
 
     @Test
     void givenHappyFlow_createGameSession() {

@@ -19,6 +19,7 @@ public class QuestionService {
     }
 
     public List<Question> getRandomQuestions() {
+
         List<Question> questions = questionRepository.findAll();
 
         if (questions.size() <= 10) {
@@ -29,9 +30,5 @@ public class QuestionService {
         return questions.stream()
                 .limit(10)
                 .toList();
-    }
-
-    public Optional<Question> getQuestionById(UUID id) {
-        return questionRepository.findById(id);
     }
 }

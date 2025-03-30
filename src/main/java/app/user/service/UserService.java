@@ -46,8 +46,6 @@ public class UserService implements UserDetailsService {
         if (optionalUser.isPresent()) {
             log.info("User already exists with username {}", registerRequest.getUsername());
             throw new DomainException("Username [%s] is already in use".formatted(registerRequest.getUsername()));
-            //return false;
-
         }
 
         User user = userRepository.save(initialiseUser(registerRequest));

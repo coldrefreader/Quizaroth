@@ -18,7 +18,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        //Permit everyone to register and login, session is created only when needed
+        //Permit everyone to register and login, session is created only when needed ( questions is for singleplayer )
         //Anything with admin requires the ADMIN role
         //Any other request requires authentication, redirects to /login if requirements are not met
         //Logout redirects to the index (starting) page, not the home ('main menu' of multiplayer) page, while clearing session and cookies

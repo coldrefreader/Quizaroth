@@ -9,6 +9,7 @@ public class PasswordMatchValidator implements ConstraintValidator<PasswordMatch
 
     @Override
     public boolean isValid(RegisterRequest request, ConstraintValidatorContext context) {
+
         if (request.getPassword() == null) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate("Password is required")

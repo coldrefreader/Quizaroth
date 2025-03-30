@@ -53,22 +53,6 @@ public class GameSessionService {
         return gameSessionRepository.save(gameSession);
     }
 
-
-//    @Transactional
-//    public void trackAndCompleteGame(UUID gameSessionId) {
-//
-//        GameSession gameSession = gameSessionRepository.findById(gameSessionId)
-//                .orElseThrow(() -> new DomainException("Game session with id " + gameSessionId + " not found"));
-//
-//        int player1Answers = answerRepository.countByGameSessionAndPlayer(gameSession, gameSession.getPlayer1());
-//        int player2Answers = answerRepository.countByGameSessionAndPlayer(gameSession, gameSession.getPlayer2());
-//
-//        if (player1Answers == 10 && player2Answers == 10) {
-//            finaliseGame(gameSession);
-//        }
-//    }
-
-
     @Transactional
     public void finaliseGame(UUID sessionId, FinaliseGameStateResponse finalState) {
 

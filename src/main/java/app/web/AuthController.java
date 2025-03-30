@@ -83,11 +83,6 @@ public class AuthController {
 
         log.info("Checking authentication for /me");
 
-//        if (userDetails == null) {
-//            log.warn("No authentication found");
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "User not authenticated"));
-//        }
-
         User updatedUser = userService.getById(userDetails.getUserId());
 
         log.info("Authenticated user: {}", userDetails.getUsername());

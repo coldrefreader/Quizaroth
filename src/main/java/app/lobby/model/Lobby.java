@@ -1,9 +1,8 @@
 package app.lobby.model;
 
+import app.web.dto.PlayerRequest;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -14,13 +13,9 @@ public class Lobby {
 
     private String lobbyId;
     private String owner;
-    private List<String> players = Collections.synchronizedList(new ArrayList<>());
+    private List<PlayerRequest> players;
 
     public boolean isFull() {
         return players.size() >= 2;
-    }
-
-    public boolean containsPlayer(String username) {
-        return players.contains(username);
     }
 }

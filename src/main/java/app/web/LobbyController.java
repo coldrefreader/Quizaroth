@@ -23,7 +23,7 @@ public class LobbyController {
 
     @PostMapping("/create")
     public ResponseEntity<Lobby> createLobby(@AuthenticationPrincipal AuthenticationMetadata user) {
-        return ResponseEntity.ok(lobbyService.createLobby(user.getUsername()));
+        return ResponseEntity.ok(lobbyService.createLobby(user.getUsername(), user.getUserId().toString()));
     }
 
     @GetMapping("/list")
@@ -39,8 +39,14 @@ public class LobbyController {
 
     @PostMapping("/join/{lobbyId}")
     public ResponseEntity<String> joinLobby(@PathVariable String lobbyId, @AuthenticationPrincipal AuthenticationMetadata user) {
-        boolean success = lobbyService.joinLobby(lobbyId, user.getUsername());
+        boolean success = lobbyService.joinLobby(lobbyId, user.getUsername(), user.getUserId().toString());
         return success ? ResponseEntity.ok("Joined lobby") : ResponseEntity.status(400).body("Lobby is full or does not exist");
+    }
+
+    @DeleteMapping("/leave/{lobbyId}")
+    public ResponseEntity<String> leaveLobby(@PathVariable String lobbyId, @AuthenticationPrincipal AuthenticationMetadata user) {
+        boolean success = lobbyService.leaveLobby(lobbyId, user.getUsername());
+        return success ? ResponseEntity.ok("Left lobby") : ResponseEntity.status(403).body("Failed to leave the lobby");
     }
 
     @DeleteMapping("/disband/{lobbyId}")

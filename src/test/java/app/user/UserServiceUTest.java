@@ -42,6 +42,7 @@ public class UserServiceUTest {
     @InjectMocks
     private UserService userService;
 
+
     @ParameterizedTest
     @MethodSource("userRoleArguments")
     void whenUserRoleIsChanged_thenCorrectlyApplyNewRole(UserRole currentRole, UserRole expectedRole) {
