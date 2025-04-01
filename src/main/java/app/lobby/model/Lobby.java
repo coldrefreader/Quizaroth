@@ -12,7 +12,7 @@ import java.util.List;
 public class Lobby {
 
     private String lobbyId;
-    private String owner;
+    private PlayerRequest owner;
     private List<PlayerRequest> players;
 
     public boolean isFull() {

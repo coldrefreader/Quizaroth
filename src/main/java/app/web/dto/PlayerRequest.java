@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class PlayerRequest {
 
     private String userId;
-    private String userName;
+    private String username;
 }

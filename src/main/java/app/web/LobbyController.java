@@ -23,7 +23,7 @@ public class LobbyController {
 
     @PostMapping("/create")
     public ResponseEntity<Lobby> createLobby(@AuthenticationPrincipal AuthenticationMetadata user) {
-        return ResponseEntity.ok(lobbyService.createLobby(user.getUsername(), user.getUserId().toString()));
+        return ResponseEntity.ok(lobbyService.createLobby(user.getUserId().toString(), user.getUsername()));
     }
 
     @GetMapping("/list")
@@ -39,7 +39,7 @@ public class LobbyController {
 
     @PostMapping("/join/{lobbyId}")
     public ResponseEntity<String> joinLobby(@PathVariable String lobbyId, @AuthenticationPrincipal AuthenticationMetadata user) {
-        boolean success = lobbyService.joinLobby(lobbyId, user.getUsername(), user.getUserId().toString());
+        boolean success = lobbyService.joinLobby(lobbyId, user.getUserId().toString(), user.getUsername());
         return success ? ResponseEntity.ok("Joined lobby") : ResponseEntity.status(400).body("Lobby is full or does not exist");
     }
 

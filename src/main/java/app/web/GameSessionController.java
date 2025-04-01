@@ -41,8 +41,6 @@ public class GameSessionController {
 
         GameSession gameSession = gameSessionService.getGameSessionById(sessionId);
 
-
-
         GameSessionResponse request = new GameSessionResponse(
                 gameSession.getId(),
                 gameSession.getPlayer1().getUsername(),

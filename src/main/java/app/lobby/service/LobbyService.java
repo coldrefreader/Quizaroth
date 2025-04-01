@@ -29,12 +29,17 @@ public class LobbyService {
     }
 
 
-    public Lobby createLobby(String ownerUsername, String ownerUserId) {
+    public Lobby createLobby(String ownerUserId, String ownerUsername) {
 
         String lobbyId = UUID.randomUUID().toString();
-        PlayerRequest owner = new PlayerRequest(ownerUsername, ownerUserId);
-        Lobby newLobby = new Lobby(lobbyId, ownerUsername, new ArrayList<>(List.of(owner)));
+        PlayerRequest owner = PlayerRequest.builder()
+                .userId(ownerUserId)
+                .username(ownerUsername)
+                .build();
+        Lobby newLobby = new Lobby(lobbyId, owner, new ArrayList<>(List.of(owner)));
         activeLobbies.put(lobbyId, newLobby);
+        log.info("Created lobby {} with owner {}", lobbyId, owner);
+        log.info("Full lobby info: {}", newLobby);
         return newLobby;
     }
 
@@ -42,21 +47,47 @@ public class LobbyService {
         return new ArrayList<>(activeLobbies.values());
     }
 
-    public boolean joinLobby(String lobbyId, String username, String userId) {
-        Lobby lobby = activeLobbies.get(lobbyId);
-        if (lobby != null && !lobby.isFull()) {
+    public boolean joinLobby(String lobbyId, String userId, String username) {
 
-            PlayerRequest newPlayer = new PlayerRequest(userId, username);
-            if (!lobby.getPlayers().contains(newPlayer)) {
+        Lobby lobby = activeLobbies.get(lobbyId);
+        if (lobby != null) {
+            PlayerRequest newPlayer = PlayerRequest.builder()
+                    .userId(userId)
+                    .username(username)
+                    .build();
+            if (lobby.getPlayers().contains(newPlayer)) {
+                log.info("User {} already in the lobby {}", username, lobbyId);
+                return true;
+            }
+            if (!lobby.isFull()) {
                 lobby.getPlayers().add(newPlayer);
                 log.info("Added {} to lobby {}", username, lobbyId);
-            } else {
-                log.info("User {} already in the lobby {}", username, lobbyId);
+                return true;
             }
-            return true;
         }
+        log.info("Lobby {} not found or full", lobbyId);
         return false;
     }
+
+    //public boolean joinLobby(String lobbyId, String userId, String username) {
+    //        Lobby lobby = activeLobbies.get(lobbyId);
+    //        if (lobby != null && !lobby.isFull()) {
+    //
+    //            PlayerRequest newPlayer = PlayerRequest.builder()
+    //                    .userId(userId)
+    //                    .username(username)
+    //                    .build();
+    //            if (!lobby.getPlayers().contains(newPlayer)) {
+    //                lobby.getPlayers().add(newPlayer);
+    //                log.info("Added {} to lobby {}", username, lobbyId);
+    //            } else {
+    //                log.info("User {} already in the lobby {}", username, lobbyId);
+    //            }
+    //            return true;
+    //        }
+    //        log.info("Lobby {} not found or full", lobbyId);
+    //        return false;
+    //    }
 
     public boolean disbandLobby(String lobbyId, String username) {
 
@@ -67,7 +98,7 @@ public class LobbyService {
         }
         log.info("Attempting to disband lobby: {}, Owner: {}, Requested by: {}",
                 lobbyId, lobby.getOwner(), username);
-        if (lobby.getOwner().equals(username)) {
+        if (lobby.getOwner().getUsername().equals(username)) {
             activeLobbies.remove(lobbyId);
             log.info("Lobby {} has been disbanded by owner {}", lobbyId, username);
             return true;
@@ -81,7 +112,11 @@ public class LobbyService {
 
         Lobby lobby = activeLobbies.get(lobbyId);
 
-        if (lobby == null || !lobby.getOwner().equals(username) || !lobby.isFull()) return false;
+        if (lobby == null || !lobby.getOwner().getUsername().equals(username) || !lobby.isFull()) {
+
+            log.warn("Cannot start game for lobby {}: lobby is null, owner mismatch or not full", lobbyId);
+            return false;
+        }
 
         try {
 
@@ -107,7 +142,14 @@ public class LobbyService {
         Lobby lobby = activeLobbies.get(lobbyId);
         if (lobby == null) return false;
 
-        return lobby.getPlayers().removeIf(player -> player.getUserName().equals(username));
+        boolean removed = lobby.getPlayers().removeIf(player -> player.getUsername().equals(username));
+
+        if (removed) {
+            log.info("User {} left lobby {}", username, lobbyId);
+        } else {
+            log.warn("User {} is not in the lobby {}", username, lobbyId);
+        }
+        return removed;
     }
 
     public Lobby getLobbyById(String lobbyId) {

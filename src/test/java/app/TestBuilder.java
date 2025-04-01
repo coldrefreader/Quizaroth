@@ -13,8 +13,7 @@ public class TestBuilder {
     public static User newUser() {
 
         return User.builder()
-                .id(UUID.randomUUID())
-                .username("Alibeb")
+                .username(UUID.randomUUID().toString())
                 .password("123123")
                 .role(UserRole.USER)
                 .isActive(true)
@@ -26,8 +25,7 @@ public class TestBuilder {
     public static User newUser2() {
 
         return User.builder()
-                .id(UUID.randomUUID())
-                .username("Magumartiel")
+                .username(UUID.randomUUID().toString())
                 .password("123123")
                 .role(UserRole.USER)
                 .isActive(true)

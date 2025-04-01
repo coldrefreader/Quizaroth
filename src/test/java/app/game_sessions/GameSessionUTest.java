@@ -74,7 +74,7 @@ public class GameSessionUTest {
     }
 
     @Test
-    void whenOneUserIdIsMissing_thenThrowDomainException() {
+    void givenOneUserIdIsMissing_whenCreateGameSession_thenThrowDomainException() {
 
         UUID correctPlayerId = UUID.randomUUID();
         UUID missingPlayerId = UUID.randomUUID();

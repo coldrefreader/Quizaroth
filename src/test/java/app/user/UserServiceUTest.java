@@ -45,7 +45,7 @@ public class UserServiceUTest {
 
     @ParameterizedTest
     @MethodSource("userRoleArguments")
-    void whenUserRoleIsChanged_thenCorrectlyApplyNewRole(UserRole currentRole, UserRole expectedRole) {
+    void givenUserRoleIsChanged_whenChangeRole_thenCorrectlyApplyNewRole(UserRole currentRole, UserRole expectedRole) {
 
         UUID userId = UUID.randomUUID();
         User user = User.builder()
@@ -111,7 +111,7 @@ public class UserServiceUTest {
 
     @ParameterizedTest
     @MethodSource("userStatusArguments")
-    void whenUserStatusIsChanged_thenCorrectlyApplyNewStatus(boolean currentStatus, boolean expectedStatus) {
+    void givenUserStatusIsChanged_whenChangeStatus_thenCorrectlyApplyNewStatus(boolean currentStatus, boolean expectedStatus) {
 
         UUID userId = UUID.randomUUID();
         User user = User.builder()
@@ -134,7 +134,7 @@ public class UserServiceUTest {
     }
 
     @Test
-    void whenFindAllUsersIsCalled_thenReturnAllUsers() {
+    void givenFindAllUsersIsCalled_whenFindAll_thenReturnAllUsers() {
 
         List<User> userList = List.of(new User(), new User());
         when(userRepository.findAll()).thenReturn(userList);
