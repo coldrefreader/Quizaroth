@@ -103,14 +103,14 @@ public class MatchHistoryUTest {
 
         when(gameSessionRepository.findTop10ByPlayer1IdOrPlayer2IdOrderByTimestampDesc(userId, userId))
                 .thenReturn(List.of(gameSession1, gameSession2, gameSessionDraw, gameSessionPlayer2Defeat, gameSessionPlayer2Draw));
+
+
     }
 
     @Test
-    void givenHappyFlow_whenGetMatchHistory_thenReturnMatchHistory() {
+    void givenHappyFlowVictory_whenGetMatchHistory_thenReturnMatchHistory() {
 
         List<MatchHistoryRequest> matchHistory = matchHistoryService.getMatchHistory(userId);
-
-        assertEquals(5, matchHistory.size());
 
         MatchHistoryRequest history1 = matchHistory.get(0);
         assertEquals(gameSession1.getId(), history1.getGameSessionId());
@@ -120,29 +120,41 @@ public class MatchHistoryUTest {
         assertEquals(GameResult.VICTORY.toString(), history1.getResult());
         assertEquals(fixedTimeStamp, history1.getTimestamp());
 
-        MatchHistoryRequest history2 = matchHistory.get(1);
-        assertEquals(gameSession2.getId(), history2.getGameSessionId());
-        assertEquals("opponent2", history2.getOpponentUsername());
+        MatchHistoryRequest history2 = matchHistory.get(3);
+        assertEquals(gameSessionPlayer2Defeat.getId(), history2.getGameSessionId());
+        assertEquals("opponent1", history2.getOpponentUsername());
         assertEquals(3, history2.getPlayerScore());
         assertEquals(5, history2.getOpponentScore());
-        assertEquals(GameResult.DEFEAT.toString(), history2.getResult());
-        assertEquals(fixedTimeStamp.plusMinutes(1), history2.getTimestamp());
+        assertEquals(GameResult.VICTORY.toString(), history2.getResult());
+        assertEquals(fixedTimeStamp.plusMinutes(3), history2.getTimestamp());
+    }
 
-        MatchHistoryRequest history3 = matchHistory.get(2);
-        assertEquals(gameSessionDraw.getId(), history3.getGameSessionId());
-        assertEquals("opponent1", history3.getOpponentUsername());
-        assertEquals(2, history3.getPlayerScore());
-        assertEquals(2, history3.getOpponentScore());
-        assertEquals(GameResult.DRAW.toString(), history3.getResult());
-        assertEquals(fixedTimeStamp.plusMinutes(2), history3.getTimestamp());
+    @Test
+    void givenHappyFlowDefeat_whenGetMatchHistory_thenReturnMatchHistory() {
 
-        MatchHistoryRequest history4 = matchHistory.get(3);
-        assertEquals(gameSessionPlayer2Defeat.getId(), history4.getGameSessionId());
+        List<MatchHistoryRequest> matchHistory = matchHistoryService.getMatchHistory(userId);
+
+        MatchHistoryRequest history3 = matchHistory.get(1);
+        assertEquals(gameSession2.getId(), history3.getGameSessionId());
+        assertEquals("opponent2", history3.getOpponentUsername());
+        assertEquals(3, history3.getPlayerScore());
+        assertEquals(5, history3.getOpponentScore());
+        assertEquals(GameResult.DEFEAT.toString(), history3.getResult());
+        assertEquals(fixedTimeStamp.plusMinutes(1), history3.getTimestamp());
+    }
+
+    @Test
+    void givenHappyFlowDraw_whenGetMatchHistory_thenReturnMatchHistory() {
+
+        List<MatchHistoryRequest> matchHistory = matchHistoryService.getMatchHistory(userId);
+
+        MatchHistoryRequest history4 = matchHistory.get(2);
+        assertEquals(gameSessionDraw.getId(), history4.getGameSessionId());
         assertEquals("opponent1", history4.getOpponentUsername());
-        assertEquals(3, history4.getPlayerScore());
-        assertEquals(5, history4.getOpponentScore());
-        assertEquals(GameResult.VICTORY.toString(), history4.getResult());
-        assertEquals(fixedTimeStamp.plusMinutes(3), history4.getTimestamp());
+        assertEquals(2, history4.getPlayerScore());
+        assertEquals(2, history4.getOpponentScore());
+        assertEquals(GameResult.DRAW.toString(), history4.getResult());
+        assertEquals(fixedTimeStamp.plusMinutes(2), history4.getTimestamp());
 
         MatchHistoryRequest history5 = matchHistory.get(4);
         assertEquals(gameSessionPlayer2Draw.getId(), history5.getGameSessionId());
@@ -161,5 +173,13 @@ public class MatchHistoryUTest {
 
         List<MatchHistoryRequest> matchHistory = matchHistoryService.getMatchHistory(userId);
         assertTrue(matchHistory.isEmpty());
+    }
+
+    @Test
+    void givenMatchHistoryList_whenGetMatchHistory_thenReturnMatchHistorySize() {
+
+        List<MatchHistoryRequest> matchHistory = matchHistoryService.getMatchHistory(userId);
+
+        assertEquals(5, matchHistory.size());
     }
 }

@@ -99,7 +99,7 @@ public class AuthController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<?> editUserProfile(@RequestBody UserEditRequest userEditRequest, Principal principal) {
+    public ResponseEntity<?> editUserProfile(@Valid @RequestBody UserEditRequest userEditRequest, Principal principal) {
 
         UUID userId = userService.getUserIdByUsername(principal.getName());
         log.info("Editing profile for user: {}", userId);
