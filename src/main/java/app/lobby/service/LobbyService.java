@@ -2,6 +2,7 @@ package app.lobby.service;
 
 import app.game_sessions.service.GameSessionService;
 import app.lobby.model.Lobby;
+import app.lobby.repository.LobbyHistoryRepository;
 import app.user.service.UserService;
 import app.web.dto.PlayerRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -21,11 +22,13 @@ public class LobbyService {
     private final Map<String, Lobby> activeLobbies = new ConcurrentHashMap<>();
     private final GameSessionService gameSessionService;
     private final UserService userService;
+    private final LobbyHistoryRepository lobbyHistoryRepository;
 
     @Autowired
-    public LobbyService(GameSessionService gameSessionService, UserService userService) {
+    public LobbyService(GameSessionService gameSessionService, UserService userService, LobbyHistoryRepository lobbyHistoryRepository) {
         this.gameSessionService = gameSessionService;
         this.userService = userService;
+        this.lobbyHistoryRepository = lobbyHistoryRepository;
     }
 
 
@@ -38,6 +41,7 @@ public class LobbyService {
                 .build();
         Lobby newLobby = new Lobby(lobbyId, owner, new ArrayList<>(List.of(owner)));
         activeLobbies.put(lobbyId, newLobby);
+        lobbyHistoryRepository.addLobby(newLobby);
         log.info("Created lobby {} with owner {}", lobbyId, owner);
         log.info("Full lobby info: {}", newLobby);
         return newLobby;
@@ -68,26 +72,6 @@ public class LobbyService {
         log.info("Lobby {} not found or full", lobbyId);
         return false;
     }
-
-    //public boolean joinLobby(String lobbyId, String userId, String username) {
-    //        Lobby lobby = activeLobbies.get(lobbyId);
-    //        if (lobby != null && !lobby.isFull()) {
-    //
-    //            PlayerRequest newPlayer = PlayerRequest.builder()
-    //                    .userId(userId)
-    //                    .username(username)
-    //                    .build();
-    //            if (!lobby.getPlayers().contains(newPlayer)) {
-    //                lobby.getPlayers().add(newPlayer);
-    //                log.info("Added {} to lobby {}", username, lobbyId);
-    //            } else {
-    //                log.info("User {} already in the lobby {}", username, lobbyId);
-    //            }
-    //            return true;
-    //        }
-    //        log.info("Lobby {} not found or full", lobbyId);
-    //        return false;
-    //    }
 
     public boolean disbandLobby(String lobbyId, String username) {
 
