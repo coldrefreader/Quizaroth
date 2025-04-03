@@ -40,16 +40,7 @@ public class GameSessionController {
     public ResponseEntity<GameSessionResponse> getGameSession(@PathVariable UUID sessionId) {
 
         GameSession gameSession = gameSessionService.getGameSessionById(sessionId);
-
-        GameSessionResponse request = new GameSessionResponse(
-                gameSession.getId(),
-                gameSession.getPlayer1().getUsername(),
-                gameSession.getPlayer2().getUsername(),
-                gameSession.getPlayer1Score(),
-                gameSession.getPlayer2Score(),
-                gameSession.getResult().name()
-
-        );
+        GameSessionResponse request = gameSessionService.createRequest(gameSession);
 
         return ResponseEntity.ok(request);
     }

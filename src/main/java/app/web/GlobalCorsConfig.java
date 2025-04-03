@@ -12,7 +12,6 @@ import java.util.List;
 @Configuration
 public class GlobalCorsConfig {
 
-
     //To stop CORS from causing torment with how it prevents every GET request from the back-end,
     //we use this to let it know it's okay to do so on a global level, with no need of manual and individual endpoint validation
     @Bean

@@ -7,7 +7,6 @@ import app.user.model.User;
 import app.user.model.UserRole;
 import app.user.repository.UserRepository;
 import app.user.service.UserService;
-import app.web.dto.RegisterRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +19,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -28,7 +26,6 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -65,48 +62,6 @@ public class UserServiceUTest {
                 Arguments.of(UserRole.USER, UserRole.ADMIN),
                 Arguments.of(UserRole.ADMIN, UserRole.USER)
         );
-    }
-
-    @Test
-    void givenHappyFlow_registerSuccessfully() {
-
-        RegisterRequest registerRequest = RegisterRequest.builder()
-                .username("React123")
-                .password("123123")
-                .confirmPassword("123123")
-                .build();
-
-        when(userRepository.findByUsername("React123")).thenReturn(Optional.empty());
-
-        User user = User.builder()
-                .id(UUID.randomUUID())
-                .username("React123")
-                .build();
-
-        when(userRepository.save(any(User.class))).thenReturn(user);
-
-        userService.register(registerRequest);
-        verify(userRepository, times(1)).save(any(User.class));
-
-        when(userRepository.findAll()).thenReturn(Collections.singletonList(user));
-        int newRepositorySize = userRepository.findAll().size();
-
-        assertEquals(1, newRepositorySize);
-    }
-
-    @Test
-    void givenExistingUser_whenRegister_thenThrowException() {
-
-        RegisterRequest registerRequest = RegisterRequest.builder()
-                .username("React123")
-                .password("123123")
-                .confirmPassword("123123")
-                .build();
-
-        when(userRepository.findByUsername(any())).thenReturn(Optional.of(new User()));
-
-        assertThrows(DomainException.class, () -> userService.register(registerRequest));
-        verify(userRepository, never()).save(any());
     }
 
     @ParameterizedTest

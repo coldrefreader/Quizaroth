@@ -69,7 +69,6 @@ public class LobbyService2UTest {
         assertTrue(result2);
     }
 
-
     @Test
     void givenFakeUser_whenLeaveLobby_thenReturnFalse() {
 

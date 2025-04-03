@@ -5,10 +5,7 @@ import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.model.UserRole;
 import app.user.repository.UserRepository;
-import app.web.dto.RegisterRequest;
 import app.web.dto.UserEditRequest;
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -19,10 +16,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+
+import static io.micrometer.common.util.StringUtils.isBlank;
 
 @Slf4j
 @Service
@@ -38,31 +35,13 @@ public class UserService implements UserDetailsService {
     }
 
     @CacheEvict(value = "users", allEntries = true)
-    @Transactional
-    public User register(@Valid RegisterRequest registerRequest) {
-
-        Optional<User> optionalUser = userRepository.findByUsername(registerRequest.getUsername());
-
-        if (optionalUser.isPresent()) {
-            log.info("User already exists with username {}", registerRequest.getUsername());
-            throw new DomainException("Username [%s] is already in use".formatted(registerRequest.getUsername()));
-        }
-
-        User user = userRepository.save(initialiseUser(registerRequest));
-
-        log.info("Successfully created new user with username [%s] and id [%s]".formatted(user.getUsername(), user.getId()));
-
-        return user;
-    }
-
-    @CacheEvict(value = "users", allEntries = true)
     public void editUserInformation(UUID userId, UserEditRequest userEditRequest) {
 
         User user = getById(userId);
 
-        user.setEmail(userEditRequest.getEmail());
-        user.setFirstName(userEditRequest.getFirstName());
-        user.setLastName(userEditRequest.getLastName());
+        user.setEmail(isBlank(userEditRequest.getEmail()) ? null : userEditRequest.getEmail());
+        user.setFirstName(isBlank(userEditRequest.getFirstName()) ? null : userEditRequest.getFirstName());
+        user.setLastName(isBlank(userEditRequest.getLastName()) ? null : userEditRequest.getLastName());
 
         userRepository.save(user);
     }
@@ -70,18 +49,6 @@ public class UserService implements UserDetailsService {
     public User getById(UUID userId) {
 
         return userRepository.findById(userId).orElseThrow(() -> new DomainException("User with id [%s] not found".formatted(userId)));
-    }
-
-    private User initialiseUser(RegisterRequest registerRequest) {
-
-        return User.builder()
-                .username(registerRequest.getUsername())
-                .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .role(UserRole.USER)
-                .isActive(true)
-                .createdOn(LocalDateTime.now())
-                .lastUpdatedOn(LocalDateTime.now())
-                .build();
     }
 
     @Cacheable("users")

@@ -1,5 +1,6 @@
 package app;
 
+import app.auth.service.AuthService;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.RegisterRequest;
@@ -22,12 +23,13 @@ public class EditProfileITest {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private AuthService authService;
 
     @Test
-    public void editProfile_happyFlow() throws Exception {
+    public void editProfile_happyFlow() {
 
         RegisterRequest registerRequest = RegisterRequest
                 .builder()
@@ -35,7 +37,7 @@ public class EditProfileITest {
                 .password("123123")
                 .confirmPassword("123123")
                 .build();
-        User newRegisteredUser = userService.register(registerRequest);
+        User newRegisteredUser = authService.register(registerRequest);
 
         UserEditRequest userEditRequest = UserEditRequest.builder()
                 .firstName("Kiye")

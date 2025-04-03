@@ -103,7 +103,6 @@ public class LobbyService {
         }
 
         try {
-
             PlayerRequest player1 = lobby.getPlayers().get(0);
             PlayerRequest player2 = lobby.getPlayers().get(1);
 

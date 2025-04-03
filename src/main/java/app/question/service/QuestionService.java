@@ -11,7 +11,6 @@ import java.util.*;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final Random rand = new Random();
 
     @Autowired
     public QuestionService(QuestionRepository questionRepository) {

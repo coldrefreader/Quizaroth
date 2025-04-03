@@ -32,7 +32,6 @@ public class QuestionController {
                         question.getChoices(),
                         question.getCorrectAnswerIndex()
                 ))).toList();
-
         return ResponseEntity.ok(request);
     }
 }

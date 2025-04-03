@@ -17,7 +17,6 @@ public class QuizarothApplication {
 
         Dotenv dotenv = Dotenv.load();
 
-
         log.info("Loaded DB URL: {}", dotenv.get("DB_URL"));
 
         SpringApplication.run(QuizarothApplication.class, args);

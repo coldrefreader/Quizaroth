@@ -8,6 +8,7 @@ import app.leaderboard.service.LeaderboardService;
 import app.user.model.User;
 import app.user.repository.UserRepository;
 import app.web.dto.FinaliseGameStateResponse;
+import app.web.dto.GameSessionResponse;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,6 @@ public class GameSessionService {
 
         User player1 = userRepository.findById(player1Id)
                 .orElseThrow(() -> new DomainException("User with id " + player1Id + " not found"));
-
         User player2 = userRepository.findById(player2Id)
                 .orElseThrow(() -> new DomainException("User with id " + player2Id + " not found"));
 
@@ -87,27 +87,37 @@ public class GameSessionService {
 
 
     private void calculateScoreAndUpdateLeaderboard(GameSession gameSession, int player1Score, int player2Score, String player1Username, String player2Username) {
-        if (player1Score > player2Score) {
 
+        if (player1Score > player2Score) {
             log.info("Victory for Player 1! {}'s score - {}; {}'s score - {}.",
                     player1Username, player1Score, player2Username, player2Score);
             leaderboardService.updateLeaderboard(player1Username, true);
             leaderboardService.updateLeaderboard(player2Username, false);
             gameSession.setResult(GameResult.VICTORY);
         } else if (player1Score < player2Score) {
-
             log.info("Victory for Player 2! {}'s score - {}; {}'s score - {}.",
                     player2Username, player2Score, player1Username, player1Score);
             leaderboardService.updateLeaderboard(player2Username, true);
             leaderboardService.updateLeaderboard(player1Username, false);
             gameSession.setResult(GameResult.DEFEAT);
         } else {
-
             log.info("It's a draw! {}'s score - {}; {}'s score - {}.",
                     gameSession.getPlayer1().getUsername(), player1Score, gameSession.getPlayer2().getUsername(), player2Score);
             leaderboardService.updateLeaderboard(player1Username, false);
             leaderboardService.updateLeaderboard(player2Username, false);
             gameSession.setResult(GameResult.DRAW);
         }
+    }
+
+    public GameSessionResponse createRequest(GameSession gameSession) {
+
+        return new GameSessionResponse(
+                gameSession.getId(),
+                gameSession.getPlayer1().getUsername(),
+                gameSession.getPlayer2().getUsername(),
+                gameSession.getPlayer1Score(),
+                gameSession.getPlayer2Score(),
+                gameSession.getResult().name()
+        );
     }
 }

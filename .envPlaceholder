@@ -1,0 +1,10 @@
+DB_URL=
+DB_USERNAME=
+DB_PASSWORD=
+
+If needed, rename the file to .env, place your Database URL, username and password like:
+DB_URL=jdbc:mysql://localhost:PORT/NAME?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true
+DB_USERNAME=????
+DB_PASSWORD=??????????
+
+And the app should start. Of course, delete everything but the first 3 lines as well

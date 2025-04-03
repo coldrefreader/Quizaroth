@@ -34,7 +34,7 @@ public class GlobalExceptionHandlerUTest {
     }
 
     @Test
-    void testHandleValidationErrors() throws Exception {
+    void testHandleValidationErrors() {
 
         RegisterRequest request = new RegisterRequest();
         request.setUsername("a");
@@ -58,23 +58,23 @@ public class GlobalExceptionHandlerUTest {
     }
 
     @Test
-    void testHandleDomainErrors() throws Exception {
+    void testHandleDomainErrors() {
 
         DomainException exception = new DomainException("User already exists");
 
         ResponseEntity<Map<String, String>> response = globalExceptionHandler.handleDomainException(exception);
 
         assertEquals(CONFLICT, response.getStatusCode());
-        assertEquals("User already exists", Objects.requireNonNull(response.getBody()).get("error"));
+        assertEquals("User already exists", Objects.requireNonNull(response.getBody()).get("errors"));
     }
 
     @Test
-    void testHandleGenericException() throws Exception {
+    void testHandleGenericException() {
 
         Exception exception = new Exception("Something went wrong");
 
         ResponseEntity<Map<String, String>> response = globalExceptionHandler.handleGenericException(exception);
         assertEquals(INTERNAL_SERVER_ERROR, response.getStatusCode());
-        assertEquals("Something went wrong", Objects.requireNonNull(response.getBody()).get("error"));
+        assertEquals("Something went wrong", Objects.requireNonNull(response.getBody()).get("errors"));
     }
 }

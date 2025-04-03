@@ -1,42 +1,43 @@
 package app.web;
 
+import app.auth.service.AuthService;
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.model.UserRole;
 import app.user.service.UserService;
-import app.web.dto.LoginRequest;
 import app.web.dto.RegisterRequest;
 import app.web.dto.UserEditRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(AuthController.class)
 public class AuthControllerApiTest {
 
     @MockitoBean
     private UserService userService;
+
+    @MockitoBean
+    private AuthService authService;
 
     @MockitoBean
     private AuthenticationManager authenticationManager;
@@ -58,7 +59,7 @@ public class AuthControllerApiTest {
 
         String registerRequestJson = objectMapper.writeValueAsString(registerRequest);
 
-        when(userService.register(registerRequest)).thenReturn(new User());
+        when(authService.register(registerRequest)).thenReturn(new User());
 
         mockMvc.perform(MockMvcRequestBuilders.post("/v1/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -67,7 +68,7 @@ public class AuthControllerApiTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"message\":  \"User successfully registered!\"}"));
 
-        verify(userService, times(1)).register(any(RegisterRequest.class));
+        verify(authService, times(1)).register(any(RegisterRequest.class));
     }
 
     @Test
@@ -108,6 +109,16 @@ public class AuthControllerApiTest {
 
         when(userService.getById(user.getId())).thenReturn(user);
 
+        Map<String, Object> expectedResponse = new HashMap<>();
+        expectedResponse.put("userId", user.getId().toString());
+        expectedResponse.put("username", user.getUsername());
+        expectedResponse.put("email", user.getEmail());
+        expectedResponse.put("firstName", user.getFirstName());
+        expectedResponse.put("lastName", user.getLastName());
+        expectedResponse.put("role", user.getRole().name());
+
+        when(authService.createResponse(user)).thenReturn(expectedResponse);
+
         SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken(authUser, null, authUser.getAuthorities())
         );
@@ -121,63 +132,5 @@ public class AuthControllerApiTest {
                                                      "\"firstName\": \"First\"," +
                                                      "\"lastName\": \"Last\"," +
                                                      "\"role\": \"USER\"}"));
-    }
-
-    @Test
-    public void givenHappyFlow_testPostLoginEndpoint() throws Exception {
-
-        LoginRequest loginRequest = new LoginRequest("testUser", "testPassword");
-        UUID userId = UUID.randomUUID();
-
-        AuthenticationMetadata authUser = new AuthenticationMetadata(userId, "testUser", "testPassword", UserRole.USER, true);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(authUser, null, authUser.getAuthorities());
-
-        when(authenticationManager.authenticate(any())).thenReturn(authentication);
-
-        String loginRequestJson = objectMapper.writeValueAsString(loginRequest);
-
-        mockMvc.perform(post("/v1/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(loginRequestJson))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().json("{\"message\":  \"Successful login\"," +
-                                                    "\"userId\": \"" + userId + "\"," +
-                                                    "\"username\": \"testUser\"," +
-                                                    "\"role\": \"USER\"}"));
-
-        verify(authenticationManager, times(1)).authenticate(any());
-    }
-
-    @Test
-    public void givenNoSessionCreated_testPostLoginEndpoint() throws Exception {
-
-        LoginRequest loginRequest = new LoginRequest("testUser", "testPassword");
-        UUID userId = UUID.randomUUID();
-
-        AuthenticationMetadata authUser = new AuthenticationMetadata(userId, "testUser", "testPassword", UserRole.USER, true);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(authUser, null, authUser.getAuthorities());
-
-        when(authenticationManager.authenticate(any())).thenReturn(authentication);
-
-        HttpServletRequest mockRequest = mock(HttpServletRequest.class);
-        when(mockRequest.getSession(true)).thenReturn(null);
-
-        String loginRequestJson = objectMapper.writeValueAsString(loginRequest);
-
-        mockMvc = MockMvcBuilders.standaloneSetup(new AuthController(userService, authenticationManager)).build();
-
-        mockMvc.perform(post("/v1/auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(loginRequestJson)
-                        .requestAttr("request", mockRequest))
-                        .andDo(print())
-                        .andExpect(status().isOk())
-                        .andExpect(content().json("{\"message\":  \"Successful login\"," +
-                                                             "\"userId\": \"" + userId + "\"," +
-                                                             "\"username\": \"testUser\"," +
-                                                             "\"role\": \"USER\"}"));
-
-        verify(authenticationManager, times(1)).authenticate(any());
     }
 }

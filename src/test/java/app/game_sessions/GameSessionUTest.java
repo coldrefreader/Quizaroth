@@ -7,7 +7,9 @@ import app.game_sessions.repository.GameSessionRepository;
 import app.game_sessions.service.GameSessionService;
 import app.leaderboard.service.LeaderboardService;
 import app.user.model.User;
+import app.user.model.UserRole;
 import app.user.repository.UserRepository;
+import app.web.dto.GameSessionResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -91,5 +93,39 @@ public class GameSessionUTest {
         verify(userRepository, times(1)).findById(correctPlayerId);
         verify(userRepository, times(1)).findById(missingPlayerId);
         verify(gameSessionRepository, never()).save(any(GameSession.class));
+    }
+
+    @Test
+    void givenGameSession_whenCreateGameSessionResponse_thenReturnResponse() {
+
+        UUID sessionId = UUID.randomUUID();
+        User player1 = User.builder().
+                id(UUID.randomUUID()).
+                username("player1")
+                .role(UserRole.USER)
+                .build();
+        User player2 = User.builder()
+                .id(UUID.randomUUID())
+                .username("player2")
+                .role(UserRole.USER)
+                .build();
+
+        GameSession gameSession = GameSession.builder()
+                .id(sessionId)
+                .player1(player1)
+                .player2(player2)
+                .player1Score(0)
+                .player2Score(0)
+                .result(GameResult.UNDETERMINED)
+                .build();
+
+        GameSessionResponse response = gameSessionService.createRequest(gameSession);
+
+        assertEquals(sessionId, response.getId());
+        assertEquals("player1", response.getPlayer1());
+        assertEquals("player2", response.getPlayer2());
+        assertEquals(0, response.getPlayer1Score());
+        assertEquals(0, response.getPlayer2Score());
+        assertEquals("UNDETERMINED", response.getResult());
     }
 }
