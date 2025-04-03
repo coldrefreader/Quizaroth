@@ -23,6 +23,10 @@ For multiplayer:
 5. Here you can either create your own lobby, after which you will need to wait for another player, or click on Join-Lobby to find a free lobby.
 6. Once you have a lobby with 2 players, the owner can click on 'Start Game' and your match will begin.
 
+For testing multiplayer's functionality, 2 accounts are needed. I recommend either an incognito tab for the second one, or a second browser.
+
+There might be some unintended visual issues once a Multiplayer match is resolved if the microservice is not running, however the match history and game session are updated correctly.
+
 Apart from the lobby functionality, you have:
 1. A real-time chat that anyone will see the messages in.
 2. The leaderboard, shown as a ladder, which displays the top 10 players by total games and win-rate.
