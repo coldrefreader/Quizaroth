@@ -72,13 +72,24 @@ public class GameSessionService {
         gameSession.setPlayer1Score(finalPlayer1Score);
         gameSession.setPlayer2Score(finalPlayer2Score);
 
-        calculateScoreAndUpdateLeaderboard(gameSession, finalPlayer1Score, finalPlayer2Score,
+        calculateScore(gameSession, finalPlayer1Score, finalPlayer2Score,
                 gameSession.getPlayer1().getUsername(), gameSession.getPlayer2().getUsername());
 
         gameSessionRepository.save(gameSession);
         log.info("Game session has been finalised : {}", gameSession.getResult());
+
+        updateLeaderboardAsync(finalPlayer1Score, finalPlayer2Score,
+                gameSession.getPlayer1().getUsername(), gameSession.getPlayer2().getUsername());
     }
 
+    private void updateLeaderboardAsync(int finalPlayer1Score, int finalPlayer2Score, String player1, String player2) {
+
+        try {
+            updateLeaderboard(finalPlayer1Score, finalPlayer2Score, player1, player2);
+        } catch (Exception e) {
+            log.error("Leaderboard update failed for players {} and {}: {}", player1, player2, e.getMessage());
+        }
+    }
 
     public GameSession getGameSessionById(UUID gameSessionId) {
         return gameSessionRepository.findById(gameSessionId)
@@ -86,28 +97,39 @@ public class GameSessionService {
     }
 
 
-    private void calculateScoreAndUpdateLeaderboard(GameSession gameSession, int player1Score, int player2Score, String player1Username, String player2Username) {
+    private void calculateScore(GameSession gameSession, int player1Score, int player2Score, String player1Username, String player2Username) {
 
         if (player1Score > player2Score) {
             log.info("Victory for Player 1! {}'s score - {}; {}'s score - {}.",
                     player1Username, player1Score, player2Username, player2Score);
-            leaderboardService.updateLeaderboard(player1Username, true);
-            leaderboardService.updateLeaderboard(player2Username, false);
             gameSession.setResult(GameResult.VICTORY);
         } else if (player1Score < player2Score) {
             log.info("Victory for Player 2! {}'s score - {}; {}'s score - {}.",
                     player2Username, player2Score, player1Username, player1Score);
-            leaderboardService.updateLeaderboard(player2Username, true);
-            leaderboardService.updateLeaderboard(player1Username, false);
             gameSession.setResult(GameResult.DEFEAT);
         } else {
             log.info("It's a draw! {}'s score - {}; {}'s score - {}.",
                     gameSession.getPlayer1().getUsername(), player1Score, gameSession.getPlayer2().getUsername(), player2Score);
-            leaderboardService.updateLeaderboard(player1Username, false);
-            leaderboardService.updateLeaderboard(player2Username, false);
             gameSession.setResult(GameResult.DRAW);
         }
     }
+
+    private void updateLeaderboard(int player1Score, int player2Score, String player1Username, String player2Username) {
+
+        if (player1Score > player2Score) {
+            leaderboardService.updateLeaderboard(player1Username, true);
+            leaderboardService.updateLeaderboard(player2Username, false);
+        } else if (player1Score < player2Score) {
+            leaderboardService.updateLeaderboard(player2Username, true);
+            leaderboardService.updateLeaderboard(player1Username, false);
+        } else {
+            leaderboardService.updateLeaderboard(player1Username, false);
+            leaderboardService.updateLeaderboard(player2Username, false);
+        }
+
+    }
+
+
 
     public GameSessionResponse createRequest(GameSession gameSession) {
 
