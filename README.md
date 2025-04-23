@@ -25,8 +25,6 @@ For multiplayer:
 
 For testing multiplayer's functionality, 2 accounts are needed. I recommend either an incognito tab for the second one, or a second browser.
 
-There might be some unintended issues once a Multiplayer match is resolved if the microservice is not running.
-
 Apart from the lobby functionality, you have:
 1. A real-time chat that anyone will see the messages in.
 2. The leaderboard, shown as a ladder, which displays the top 10 players by total games and win-rate.
