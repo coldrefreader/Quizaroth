@@ -29,4 +29,7 @@ public class Question {
 
     @Column(nullable = false)
     private int correctAnswerIndex; // 0, 1, 2
+
+    @Column(nullable = false)
+    private String category = "WARCRAFT";
 }

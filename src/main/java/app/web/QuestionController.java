@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,16 +23,11 @@ public class QuestionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<QuestionRequest>> getQuestions() {
+    public ResponseEntity<List<QuestionRequest>> getQuestions(
+            @RequestParam(defaultValue = "WARCRAFT") String category
+    ) {
 
-        List<QuestionRequest> request = questionService.getRandomQuestions()
-                .stream()
-                .map((question -> new QuestionRequest(
-                        question.getId(),
-                        question.getText(),
-                        question.getChoices(),
-                        question.getCorrectAnswerIndex()
-                ))).toList();
+        List<QuestionRequest> request = questionService.getRandomQuestions(category);
         return ResponseEntity.ok(request);
     }
 }

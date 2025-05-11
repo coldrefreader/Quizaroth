@@ -1,70 +1,83 @@
 id,question,choice1,choice2,choice3,correctAnswerIndex
-1,"What is the first city Arthas visits in the campaign?","Hearthglen","Strahnbrad","Solliden",1
-2,"What is the name of Kael'thas's weapon?","Quel'delar","Felomin ashal","Felo'melorn",2
-3,"Which Dreadlord took control of Garithos's forces?","Balnazzar","Varimathras","Detheroc",2
-4,"Which of these is not part of the Seven Human Kingdoms?","Valgarde","Alterac","Dalaran",0
-5,"What is the name of Maiev's brother?","Orenthil","Melithar","Jarod",2
-6,"Which is the first World Tree?","Shaladrassil","Vordrassil","Nordrassil",0
-7,"WoW's which expansion is Warlords of Draenor?","Sixth","Fifth","Fourth",1
-8,"Which of these was the second biggest Night Elven city?","Eldre'thalas","Dolanaar","Suramar",2
-9,"The High Elves descend from which Elf culture?","Nightborne","Highborne","Ren'Dorei",1
-10,"Which Dreadlord first began to suspect Ner'zhul's motives?","Mephistroth","Tichondrius","Anetheron",1
-11,"Which Troll helped Thrall when he was stranded near the Maelstrom?","Sen'jin","Zul'jin","Vol'jin",0
-12,"Which is not a moon of Azeroth?","The Pale Lady","The Blue Child","The White Lady",0
-13,"Which Dreadlord lured Arthas to go to Northrend?","Balnazzar","Mal'Ganis","Detheroc",1
-14,"Which Old God's whispers drove Neltharion insane?","C'thun","N'zoth","G'huun",1
-15,"Who was the first Lich King?","Arthas","Bolvar","Ner'zhul",2
-16,"Which Pandaren founded the Horde-friendly Pandaren faction?","Ji Firepaw","Zhu Longbrow","Chen Stormstout",0
-17,"Who is the Aspect of Time?","Nozdormu","Ysera","Malygos",0
-18,"Which Dragonflight is associated with the domain of nature?","Red","Green","Bronze",1
-19,"Who was the first Guardian of Tirisfal?","Aegwynn","Medivh","Alodi",2
-20,"Which of the Old Gods was imprisoned beneath Ulduar?","Y'shaarj","N'Zoth","Yogg-Saron",2
-21,"Whose body did Xal'Atath possess?","Inanis","Jalinde","Saldor",0
-22,"In which year were the Highborne exiled from Kalimdor?","7800","7300","9400",1
-23,"Who represents the High Elves in Quel'Thalas?","Auric","Vereesa","Ari",0
-24,"Which title is most commonly used to refer to Deathwing?","The Worldbreaker","Aspect of Death","The Destroyer",2
-25,"What was the name of the Old Gods' dominion over Azeroth?","Ahn'Qiraj","The Black Empire","Blackrock",1
-26,"Which Dwarven clan was victorious in the War of the Three Hammers?","Bronzebeard","Wildhammer","Dark Iron",0
-27,"How many Sha were buried in Pandaria?","Six","Seven","Eight",1
-28,"Who first betrayed the Orcs of Draenor in favour of the Legion?","Kilrogg","Gul'dan","Ner'zhul",1
-29,"During her pursuit of Illidan, who was Maiev's second in command?","Shandris","Raene","Naisha",2
-30,"Which Sha was the most powerful?","Pride","Anger","Violence",0
-31,"What are the High Elves and Blood Elves who succumbed to magical withdrawal called?","Wretched","Withered","Darkfallen",0
-32,"Where did the second destruction of Dalaran take place?","Hillsbrad Foothills","Crystalsong Forest","Khaz Algar",2
-33,"Whose teachings were used to found the Cult of Forgotten Shadows?","Aelthalyste","Natalie Seline","Meryl Felstorm",1
-34,"Which Eredar was not a member of the Triumvirate of Argus?","Velen","Kil'jaeden","Thal'kiel",2
-35,"What was Outland formerly called?","Xandros","Draenor","Mardum",1
-36,"Which planet was destroyed by Dimensius the All-Devouring?","K'aresh","Karkora","Niskara",0
-37,"Where did the Highborne land after their exile from Kalimdor?","Tirisfal Glades","Silverpine Forest","Eversong Woods",0
-38,"The studying of which magic by Kel'Thuzad led to his expulsion from Dalaran?","Void","Necromancy","Fel",1
-39,"Whose soul did Frostmourne claim first?","Uther","Terenas","Arthas",2
-40,"Who betrayed Gnomeregan during the Troggs' invasion?","Razlo Crushcog","Sicco Thermaplugg","Telzo Sparkspanner",1
-41,"Which Troll tribe resides on Kalimdor?","Amani","Gurubashi","Faraki",2
-42,"Who founded the Sunstrider dynasty?","Dath'Remar","Anasterian","Lyandra",0
-43,"Whose blood enslaved the Orcs in Kalimdor?","Magtheridon","Mannoroth","Anetheron",1
-44,"How many of the Zanchuli Council betrayed King Rastakhan?","Two","Four","Three",1
-45,"In his quest for revenge, where did Arthas and his army land on Northrend?","Dragonblight","Borean Tundra","Grizzly Hills",0
-46,"Who was not approached by Medivh to sail west before the Legion's invasion?","Antonidas","Jaina","Daelin",2
-47,"Which Dreadlord served and eventually betrayed Sylvanas?","Tichondrius","Varimathras","Detheroc",1
-48,"What is the capital of the Draenei?","Azuremyst","The Exodar","Shattrath",1
-49,"Which Orc did Maiev aid on the Broken Isles?","Drek'thar","Drak'thul","Samuro",1
-50,"What is the name of the paladin who aided Maiev, Kael and Malfurion in Dalaran's ruins?","Magroth","Sage","Ballador",0
-51,"Who threatened the Tauren until they were aided by the Horde?","Centaurs","Harpies","Kobolds",0
-52,"What was the name of the Plaguelands before the Scourge invasion?","Avalon","Thondroril","Eastweald",2
-53,"Following the disintegration of Old Arathor, which Human Kingdom inherited its capital?","Alterac","Stromgarde","Gilneas",1
-54,"Which Titan constructs maintained the facilities of Uldum?","Tol'vir","Keepers","Refti",0
-55,"Which Titan constructs lost their way and ruled Pandaria with an iron fist?","Anubisaths","Mogu","Vrykul",1
-56,"How many Humans were taught magic by the High Elves in exchange for their aid against the Amani?","20","50","100",2
-57,"Who was the last King of Ironforge?","Magni","Dagran","Kurdran",0
-58,"Where did the War of the Shifting Sands primarily take place?","Tanaris","Silithus","Blasted Lands",1
-59,"What is the Headless Horseman's real name?","Nicholas Dverenhoff","Duthorian Rall","Thomas Thomson",2
-60,"Which planet's Worldsoul consumed much of the world's Spirit, resulting in elemental chaos?","Azeroth","K'aresh","Argus",0
-61,"What is the name of the sea to the west of Kalimdor?","Veiled Sea","Frozen Sea","Forbidding Sea",0
-62,"Near which world did the Pantheon of Order confront Sargeras?","Xerrath","Nihilam","Shar'gel",1
-63,"How many known continents does Azeroth have?","Five","Three","Four",2
-64,"What is the Mantid's seat of power called during Mists of Pandaria?","Klaxxi'vess","Heart of Fear","Terrace of Gurthan",1
-65,"Which Kul Tiran noble house did not partake in the Invasion of Durotar?","Proudmoore","Waycrest","Ashvane",1
-66,"Following Zul's betrayal, which race was represented for the first time on the Zanchuli Council?","Forest Troll","Vulpera","Tortollan",2
-67,"How many members did the Titan Pantheon have at its peak?","Six","Seven","Five",1
-68,"Who of the Titans served Sargeras before the creation of the Legion?","Aggramar","Golganneth","Khaz'goroth",0
-69,"Which of these descended from the Aqir who traveled to Northrend?","Qiraji","N'raqi","Nerubians",2
+1,"What is the first city Arthas visits in the campaign?","Hearthglen","Strahnbrad","Solliden",1,WARCRAFT
+2,"What is the name of Kael'thas's weapon?","Quel'delar","Felomin ashal","Felo'melorn",2,WARCRAFT
+3,"Which Dreadlord took control of Garithos's forces?","Balnazzar","Varimathras","Detheroc",2,WARCRAFT
+4,"Which of these is not part of the Seven Human Kingdoms?","Valgarde","Alterac","Dalaran",0,WARCRAFT
+5,"What is the name of Maiev's brother?","Orenthil","Melithar","Jarod",2,WARCRAFT
+6,"Which is the first World Tree?","Shaladrassil","Vordrassil","Nordrassil",0,WARCRAFT
+7,"WoW's which expansion is Warlords of Draenor?","Sixth","Fifth","Fourth",1,WARCRAFT
+8,"Which of these was the second biggest Night Elven city?","Eldre'thalas","Dolanaar","Suramar",2,WARCRAFT
+9,"The High Elves descend from which Elf culture?","Nightborne","Highborne","Ren'Dorei",1,WARCRAFT
+10,"Which Dreadlord first began to suspect Ner'zhul's motives?","Mephistroth","Tichondrius","Anetheron",1,WARCRAFT
+11,"Which Troll helped Thrall when he was stranded near the Maelstrom?","Sen'jin","Zul'jin","Vol'jin",0,WARCRAFT
+12,"Which is not a moon of Azeroth?","The Pale Lady","The Blue Child","The White Lady",0,WARCRAFT
+13,"Which Dreadlord lured Arthas to go to Northrend?","Balnazzar","Mal'Ganis","Detheroc",1,WARCRAFT
+14,"Which Old God's whispers drove Neltharion insane?","C'thun","N'zoth","G'huun",1,WARCRAFT
+15,"Who was the first Lich King?","Arthas","Bolvar","Ner'zhul",2,WARCRAFT
+16,"Which Pandaren founded the Horde-friendly Pandaren faction?","Ji Firepaw","Zhu Longbrow","Chen Stormstout",0,WARCRAFT
+17,"Who is the Aspect of Time?","Nozdormu","Ysera","Malygos",0,WARCRAFT
+18,"Which Dragonflight is associated with the domain of nature?","Red","Green","Bronze",1,WARCRAFT
+19,"Who was the first Guardian of Tirisfal?","Aegwynn","Medivh","Alodi",2,WARCRAFT
+20,"Which of the Old Gods was imprisoned beneath Ulduar?","Y'shaarj","N'Zoth","Yogg-Saron",2,WARCRAFT
+21,"Whose body did Xal'Atath possess?","Inanis","Jalinde","Saldor",0,WARCRAFT
+22,"In which year were the Highborne exiled from Kalimdor?","7800","7300","9400",1,WARCRAFT
+23,"Who represents the High Elves in Quel'Thalas?","Auric","Vereesa","Ari",0,WARCRAFT
+24,"Which title is most commonly used to refer to Deathwing?","The Worldbreaker","Aspect of Death","The Destroyer",2,WARCRAFT
+25,"What was the name of the Old Gods' dominion over Azeroth?","Ahn'Qiraj","The Black Empire","Blackrock",1,WARCRAFT
+26,"Which Dwarven clan was victorious in the War of the Three Hammers?","Bronzebeard","Wildhammer","Dark Iron",0,WARCRAFT
+27,"How many Sha were buried in Pandaria?","Six","Seven","Eight",1,WARCRAFT
+28,"Who first betrayed the Orcs of Draenor in favour of the Legion?","Kilrogg","Gul'dan","Ner'zhul",1,WARCRAFT
+29,"During her pursuit of Illidan, who was Maiev's second in command?","Shandris","Raene","Naisha",2,WARCRAFT
+30,"Which Sha was the most powerful?","Pride","Anger","Violence",0,WARCRAFT
+31,"What are the High Elves and Blood Elves who succumbed to magical withdrawal called?","Wretched","Withered","Darkfallen",0,WARCRAFT
+32,"Where did the second destruction of Dalaran take place?","Hillsbrad Foothills","Crystalsong Forest","Khaz Algar",2,WARCRAFT
+33,"Whose teachings were used to found the Cult of Forgotten Shadows?","Aelthalyste","Natalie Seline","Meryl Felstorm",1,WARCRAFT
+34,"Which Eredar was not a member of the Triumvirate of Argus?","Velen","Kil'jaeden","Thal'kiel",2,WARCRAFT
+35,"What was Outland formerly called?","Xandros","Draenor","Mardum",1,WARCRAFT
+36,"Which planet was destroyed by Dimensius the All-Devouring?","K'aresh","Karkora","Niskara",0,WARCRAFT
+37,"Where did the Highborne land after their exile from Kalimdor?","Tirisfal Glades","Silverpine Forest","Eversong Woods",0,WARCRAFT
+38,"The studying of which magic by Kel'Thuzad led to his expulsion from Dalaran?","Void","Necromancy","Fel",1,WARCRAFT
+39,"Whose soul did Frostmourne claim first?","Uther","Terenas","Arthas",2,WARCRAFT
+40,"Who betrayed Gnomeregan during the Troggs' invasion?","Razlo Crushcog","Sicco Thermaplugg","Telzo Sparkspanner",1,WARCRAFT
+41,"Which Troll tribe resides on Kalimdor?","Amani","Gurubashi","Faraki",2,WARCRAFT
+42,"Who founded the Sunstrider dynasty?","Dath'Remar","Anasterian","Lyandra",0,WARCRAFT
+43,"Whose blood enslaved the Orcs in Kalimdor?","Magtheridon","Mannoroth","Anetheron",1,WARCRAFT
+44,"How many of the Zanchuli Council betrayed King Rastakhan?","Two","Four","Three",1,WARCRAFT
+45,"In his quest for revenge, where did Arthas and his army land on Northrend?","Dragonblight","Borean Tundra","Grizzly Hills",0,WARCRAFT
+46,"Who was not approached by Medivh to sail west before the Legion's invasion?","Antonidas","Jaina","Daelin",2,WARCRAFT
+47,"Which Dreadlord served and eventually betrayed Sylvanas?","Tichondrius","Varimathras","Detheroc",1,WARCRAFT
+48,"What is the capital of the Draenei?","Azuremyst","The Exodar","Shattrath",1,WARCRAFT
+49,"Which Orc did Maiev aid on the Broken Isles?","Drek'thar","Drak'thul","Samuro",1,WARCRAFT
+50,"What is the name of the paladin who aided Maiev, Kael and Malfurion in Dalaran's ruins?","Magroth","Sage","Ballador",0,WARCRAFT
+51,"Who threatened the Tauren until they were aided by the Horde?","Centaurs","Harpies","Kobolds",0,WARCRAFT
+52,"What was the name of the Plaguelands before the Scourge invasion?","Avalon","Thondroril","Eastweald",2,WARCRAFT
+53,"Following the disintegration of Old Arathor, which Human Kingdom inherited its capital?","Alterac","Stromgarde","Gilneas",1,WARCRAFT
+54,"Which Titan constructs maintained the facilities of Uldum?","Tol'vir","Keepers","Refti",0,WARCRAFT
+55,"Which Titan constructs lost their way and ruled Pandaria with an iron fist?","Anubisaths","Mogu","Vrykul",1,WARCRAFT
+56,"How many Humans were taught magic by the High Elves in exchange for their aid against the Amani?","20","50","100",2,WARCRAFT
+57,"Who was the last King of Ironforge?","Magni","Dagran","Kurdran",0,WARCRAFT
+58,"Where did the War of the Shifting Sands primarily take place?","Tanaris","Silithus","Blasted Lands",1,WARCRAFT
+59,"What is the Headless Horseman's real name?","Nicholas Dverenhoff","Duthorian Rall","Thomas Thomson",2,WARCRAFT
+60,"Which planet's Worldsoul consumed much of the world's Spirit, resulting in elemental chaos?","Azeroth","K'aresh","Argus",0,WARCRAFT
+61,"What is the name of the sea to the west of Kalimdor?","Veiled Sea","Frozen Sea","Forbidding Sea",0,WARCRAFT
+62,"Near which world did the Pantheon of Order confront Sargeras?","Xerrath","Nihilam","Shar'gel",1,WARCRAFT
+63,"How many known continents does Azeroth have?","Five","Three","Four",2,WARCRAFT
+64,"What is the Mantid's seat of power called during Mists of Pandaria?","Klaxxi'vess","Heart of Fear","Terrace of Gurthan",1,WARCRAFT
+65,"Which Kul Tiran noble house did not partake in the Invasion of Durotar?","Proudmoore","Waycrest","Ashvane",1,WARCRAFT
+66,"Following Zul's betrayal, which race was represented for the first time on the Zanchuli Council?","Forest Troll","Vulpera","Tortollan",2,WARCRAFT
+67,"How many members did the Titan Pantheon have at its peak?","Six","Seven","Five",1,WARCRAFT
+68,"Who of the Titans served Sargeras before the creation of the Legion?","Aggramar","Golganneth","Khaz'goroth",0,WARCRAFT
+69,"Which of these descended from the Aqir who traveled to Northrend?","Qiraji","N'raqi","Nerubians",2,WARCRAFT
+7000,"Which planet is the homeworld of the Protoss?","Ulnar","Aiur","Shakuras",1,STARBLO
+7001,"Who did not take part in the creation of Sanctuary?","Inarius","Mephisto","Lilith",1,STARBLO
+7002,"Who created the Overmind?","Narud","The UED","Amon",2,STARBLO
+7003,"Where did the Primal Zerg come from?","Zerus","Mar Sara","Char",0,STARBLO
+7004,"How many Prime and Lesser Evils lead the Burning Hells?","6","5","7",2,STARBLO
+7005,"How many Archangels lead the High Heavens after Malthael's departure?","4","3","5",1,STARBLO
+7006,"From where did Hell resume their invasion of Sanctuary in Diablo 1?","Tristram","Caldeum","Kurast",0,STARBLO
+7007,"Where did the Khalai Protoss flee to after the Zerg took over their homeworld?","Glacius","Meinhoff","Shakuras",2,STARBLO
+7008,"Which Protoss faction formed after they were exiled for rejecting the Khala?","Nerazim","Ihan-rii","Tal'darim",0,STARBLO
+7009,"On which planet was the most powerful Terran faction formed when they arrived in the Koprulu Sector?","Moria","Tarsonis","Umoja",1,STARBLO
+7010,"In which year did the UED begin preparations to take control over the colonies?","2506","2500","2499",2,STARBLO
+7011,"What is the name of the special operatives of the Dominion?","Wraith","Ghost","Spectre",1,STARBLO
+7012,"Before and during the Brood War, who were in charge of leading the many different Zerg armies?","Queens","Cerebrates","Overlords",1,STARBLO

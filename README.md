@@ -13,7 +13,9 @@ The primary functionality is a 10 rounds-based game where you are matched agains
 Questions, and the 3 attached answers, cover different topics of Warcraft's universe and range from the early strategy games to the most recent World of Warcraft expansion.
 
 
-For singleplayer, simply click on 'Singleplayer', choose a difficulty which affects the allocated time per question and chance of the A.I. to choose successfully, and play.
+For singleplayer, simply click on 'Singleplayer' and choose:
+1. A difficulty, which affects the allocated time per question and chance of the A.I. to choose successfully,
+2. A category, which affects the universes the questions will be based on.
 
 For multiplayer:
 1. Click on 'Multiplayer' and then 'Register'. This redirects you to the account creation page.

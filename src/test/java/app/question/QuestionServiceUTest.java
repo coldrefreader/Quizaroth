@@ -3,17 +3,18 @@ package app.question;
 import app.question.model.Question;
 import app.question.repository.QuestionRepository;
 import app.question.service.QuestionService;
+import app.web.dto.QuestionRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,20 +30,32 @@ public class QuestionServiceUTest {
     void givenLessThanTenQuestions_whenGetQuestions_thenReturnQuestions() {
 
         List<Question> questions = Arrays.asList(
-                Question.builder().id(UUID.randomUUID()).text("Question 1").choices(Arrays.asList("Choice 1", "Choice 2", "Choice 3"))
+                Question.builder()
+                        .id(UUID.randomUUID())
+                        .text("Question 1")
+                        .choices(List.of("Choice 1", "Choice 2", "Choice 3"))
                         .correctAnswerIndex(0).build(),
-                Question.builder().id(UUID.randomUUID()).text("Question 2").choices(Arrays.asList("Choice 1", "Choice 2", "Choice 3"))
+                Question.builder()
+                        .id(UUID.randomUUID())
+                        .text("Question 2")
+                        .choices(List.of("Choice 1", "Choice 2", "Choice 3"))
                         .correctAnswerIndex(1).build(),
-                Question.builder().id(UUID.randomUUID()).text("Question 3").choices(Arrays.asList("Choice 1", "Choice 2", "Choice 3"))
+                Question.builder()
+                        .id(UUID.randomUUID())
+                        .text("Question 3")
+                        .choices(List.of("Choice 1", "Choice 2", "Choice 3"))
                         .correctAnswerIndex(2).build()
         );
 
-        when(questionRepository.findAll()).thenReturn(questions);
 
-        List<Question> result = questionService.getRandomQuestions();
+        when(questionRepository.findRandomByCategory("WARCRAFT")).thenReturn(questions);
 
-        assertEquals(questions.size(), result.size());
-        assertEquals(questions, result);
+        List<QuestionRequest> result = questionService.getRandomQuestions("WARCRAFT");
+        assertEquals(3, result.size());
+
+        List<UUID> originalIDs = questions.stream().map(Question::getId).toList();
+        List<UUID> returnedIDs = result.stream().map(QuestionRequest::id).toList();
+        assertTrue(returnedIDs.containsAll(originalIDs), "Returned IDs should match the original IDs");
     }
 
     @Test
@@ -73,12 +86,10 @@ public class QuestionServiceUTest {
                         .correctAnswerIndex(2).build()
         );
 
-        when(questionRepository.findAll()).thenReturn(questions);
+        when(questionRepository.findRandomByCategory("STARBLO")).thenReturn(questions);
 
-        List<Question> result = questionService.getRandomQuestions();
+        List<QuestionRequest> result = questionService.getRandomQuestions("STARBLO");
 
         assertEquals(10, result.size());
     }
-
-
 }

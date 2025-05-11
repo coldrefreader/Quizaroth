@@ -63,6 +63,10 @@ public class CsvImporterService {
                         tokens[4].replace("\"", "")));
                 question.setCorrectAnswerIndex(Integer.parseInt(tokens[5]));
 
+                if (tokens.length >= 7) {
+                    question.setCategory(tokens[6].replaceAll("\"", "").trim());
+                }
+
                 newQuestions.add(question);
             }
         } catch (Exception e) {

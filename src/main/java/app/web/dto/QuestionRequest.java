@@ -10,5 +10,6 @@ public record QuestionRequest (
     UUID id,
     String text,
     List<String> choices,
-    int correctAnswerIndex
+    int correctAnswerIndex,
+    String category
     ) {}
